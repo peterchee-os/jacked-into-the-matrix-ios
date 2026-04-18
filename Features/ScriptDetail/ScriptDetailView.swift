@@ -105,6 +105,11 @@ struct ScriptDetailView: View {
         .sheet(isPresented: $showingPlaybackConfirmation) {
             PlaybackConfirmationSheet(script: script)
         }
+        .navigationDestination(for: String.self) { value in
+            if value == "playback" {
+                PlaybackView(script: script)
+            }
+        }
     }
 
     private var categoryIcon: String {
@@ -274,6 +279,7 @@ struct PlaybackConfirmationSheet: View {
     let script: Script
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject private var appEnvironment: AppEnvironment
+    @EnvironmentObject private var router: AppRouter
 
     var body: some View {
         NavigationStack {
@@ -306,7 +312,7 @@ struct PlaybackConfirmationSheet: View {
 
                 VStack(spacing: 12) {
                     Button {
-                        sendToGlasses()
+                        startPlayback()
                     } label: {
                         HStack {
                             Image(systemName: "eyeglasses")
@@ -332,7 +338,7 @@ struct PlaybackConfirmationSheet: View {
         }
     }
 
-    private func sendToGlasses() {
+    private func startPlayback() {
         // Start playback on phone
         appEnvironment.playbackEngine.start(script: script, mode: .stepByStep)
 
@@ -340,6 +346,9 @@ struct PlaybackConfirmationSheet: View {
         // appEnvironment.evenSessionManager.send(payload: ...)
 
         dismiss()
+
+        // Navigate to playback view
+        router.navigationPath.append("playback")
     }
 }
 
