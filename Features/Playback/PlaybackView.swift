@@ -4,7 +4,6 @@ struct PlaybackView: View {
     let script: Script
     @EnvironmentObject private var appEnvironment: AppEnvironment
     @Environment(\.dismiss) private var dismiss
-    @State private var showingModePicker = false
     @State private var showingExitConfirmation = false
 
     var body: some View {
@@ -38,11 +37,15 @@ struct PlaybackView: View {
 
             // MARK: - Navigation Controls
             NavigationControls(
+                script: script,
+                currentMode: mode,
                 canGoPrevious: currentStepIndex > 0,
                 canGoNext: currentStepIndex < script.steps.count - 1,
                 onPrevious: { appEnvironment.playbackEngine.previous() },
                 onNext: { appEnvironment.playbackEngine.next(totalSteps: script.steps.count) },
-                onModeChange: { showingModePicker = true }
+                onModeChange: { newMode in
+                    appEnvironment.playbackEngine.setMode(newMode)
+                }
             )
             .padding()
             .background(Color(.systemBackground))
@@ -56,16 +59,6 @@ struct PlaybackView: View {
                     showingExitConfirmation = true
                 }
             }
-        }
-        .confirmationDialog("Playback Mode", isPresented: $showingModePicker) {
-            ForEach(PlaybackMode.allCases, id: \.self) { mode in
-                Button(mode.displayName) {
-                    appEnvironment.playbackEngine.setMode(mode)
-                }
-            }
-            Button("Cancel", role: .cancel) { }
-        } message: {
-            Text("Choose how you want to follow the steps")
         }
         .alert("End Playback?", isPresented: $showingExitConfirmation) {
             Button("Cancel", role: .cancel) { }
@@ -236,16 +229,37 @@ struct EmptyStepView: View {
 }
 
 struct NavigationControls: View {
+    let script: Script
+    let currentMode: PlaybackMode
     let canGoPrevious: Bool
     let canGoNext: Bool
     let onPrevious: () -> Void
     let onNext: () -> Void
-    let onModeChange: () -> Void
+    let onModeChange: (PlaybackMode) -> Void
 
     var body: some View {
         VStack(spacing: 12) {
-            // Mode selector
-            Button(action: onModeChange) {
+            // Mode selector menu
+            Menu {
+                ForEach(PlaybackMode.allCases, id: \.self) { mode in
+                    Button {
+                        onModeChange(mode)
+                    } label: {
+                        Label(mode.displayName, systemImage: mode.icon)
+                        if mode == currentMode {
+                            Image(systemName: "checkmark")
+                        }
+                    }
+                }
+                
+                Divider()
+                
+                NavigationLink {
+                    DrillModeView(script: script)
+                } label: {
+                    Label("Drill Mode", systemImage: "graduationcap")
+                }
+            } label: {
                 Label("Change Mode", systemImage: "gear")
                     .font(.subheadline)
             }
