@@ -25,18 +25,39 @@ final class EvenHubLauncher {
             return
         }
         
+        print("Even Hub URL: \(urlString)")
+        print("Even Hub installed: \(isEvenHubInstalled)")
+        
         if isEvenHubInstalled {
             UIApplication.shared.open(url, options: [:]) { success in
                 if success {
-                    print("Launched Even Hub with script: \(script.title)")
+                    print("✅ Launched Even Hub with script: \(script.title)")
                 } else {
-                    print("Failed to launch Even Hub")
+                    print("❌ Failed to launch Even Hub - URL: \(urlString)")
                 }
             }
         } else {
-            print("Even Hub not installed")
-            // Could show alert to user to install Even Hub
+            print("⚠️ Even Hub not installed")
+            // Show alert on main thread
+            DispatchQueue.main.async {
+                showEvenHubNotInstalledAlert()
+            }
         }
+    }
+    
+    private static func showEvenHubNotInstalledAlert() {
+        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+              let rootViewController = windowScene.windows.first?.rootViewController else {
+            return
+        }
+        
+        let alert = UIAlertController(
+            title: "Even Hub Not Found",
+            message: "Please install the Even Hub app from the App Store to use this feature.",
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        rootViewController.present(alert, animated: true)
     }
     
     /// Build Even Hub compatible URL
