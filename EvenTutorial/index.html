@@ -64,8 +64,30 @@
             try {
                 infoDiv.textContent = 'Loading Even SDK...';
                 
+                // Check if SDK loaded
+                console.log('window.EvenHubSDK:', window.EvenHubSDK);
+                console.log('Available globals:', Object.keys(window).filter(k => k.toLowerCase().includes('even')));
+                
+                if (!window.EvenHubSDK) {
+                    // Try alternative SDK access patterns
+                    if (window.evenHubSDK) {
+                        window.EvenHubSDK = window.evenHubSDK;
+                    } else if (window.EvenRealities) {
+                        window.EvenHubSDK = window.EvenRealities;
+                    }
+                }
+                
+                if (!window.EvenHubSDK) {
+                    throw new Error('Even SDK not found. Make sure you\'re running in the Even Hub simulator or app.');
+                }
+                
                 // Wait for the bridge to be ready
                 const { waitForEvenAppBridge } = window.EvenHubSDK;
+                
+                if (!waitForEvenAppBridge) {
+                    throw new Error('waitForEvenAppBridge not found in SDK');
+                }
+                
                 bridge = await waitForEvenAppBridge();
                 
                 statusDiv.className = 'status connected';
@@ -79,7 +101,10 @@
             } catch (error) {
                 statusDiv.className = 'status error';
                 statusDiv.textContent = '❌ Failed to connect: ' + error.message;
-                infoDiv.textContent = 'Error: ' + error.message;
+                infoDiv.innerHTML = 'Error: ' + error.message + '<br><br>' +
+                    'Debug info:<br>' +
+                    'EvenHubSDK: ' + (window.EvenHubSDK ? 'found' : 'not found') + '<br>' +
+                    'User Agent: ' + navigator.userAgent.substring(0, 50) + '...';
                 console.error('Failed to initialize:', error);
             }
         }
@@ -92,7 +117,11 @@
                 
                 // Create a text container for the glasses
                 // This uses the proper SDK API
-                const { TextContainerProperty } = window.EvenHubSDK;
+                const { TextContainerProperty } = window.EvenHubSDK || {};
+                
+                if (!TextContainerProperty) {
+                    throw new Error('TextContainerProperty not found in SDK');
+                }
                 
                 const textContainer = new TextContainerProperty({
                     xPosition: 0,

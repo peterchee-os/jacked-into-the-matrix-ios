@@ -67,6 +67,28 @@ const result = await bridge.createStartUpPageContainer(1, [textContainer])
 - **Color**: Monochrome (green on black)
 - **Input**: Touchpads on temples (single tap, double tap, swipe)
 
+## Important: SDK Only Works in Even Hub Environment
+
+**The Even SDK is NOT available in regular browsers!** It only works when:
+1. Running inside the Even Hub Simulator
+2. Running as a plugin inside the Even Hub app
+
+The `<script>` tag loads a placeholder - the actual SDK is injected by the Even Hub runtime.
+
+### Testing in Browser (without SDK)
+If you open `http://localhost:5173` in Safari/Chrome, you'll see:
+- ❌ "Even SDK not found" error
+- This is **expected** - the SDK isn't injected
+
+### Testing in Simulator (with SDK)
+Run the simulator and load the URL:
+```bash
+evenhub-simulator http://localhost:5173
+```
+The simulator injects the SDK and you should see:
+- ✅ "Connected to G2 glasses!"
+- Button becomes enabled
+
 ## Troubleshooting
 
 If the simulator doesn't open:
@@ -76,6 +98,7 @@ If the simulator doesn't open:
    open /opt/homebrew/lib/node_modules/@evenrealities/evenhub-simulator/node_modules/@evenrealities/sim-darwin-arm64/bin/evenhub-simulator
    ```
 3. Check for errors in terminal output
+4. **Make sure you're viewing the app IN the simulator, not a regular browser**
 
 ## Next Steps
 
