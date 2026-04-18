@@ -78,6 +78,15 @@ struct ScriptDetailView: View {
                     }
                 }
             }
+            
+            // MARK: - Send to Glasses Button (Prominent)
+            Section {
+                SendToGlassesButton(riskLevel: script.riskLevel) {
+                    prepareToSend()
+                }
+                .frame(maxWidth: .infinity, alignment: .center)
+                .listRowBackground(Color.clear)
+            }
         }
         .navigationTitle(script.title)
         .navigationBarTitleDisplayMode(.large)
@@ -85,12 +94,6 @@ struct ScriptDetailView: View {
             ToolbarItem(placement: .topBarTrailing) {
                 FavoriteButton(isFavorite: script.isFavorite) {
                     toggleFavorite()
-                }
-            }
-
-            ToolbarItem(placement: .bottomBar) {
-                SendToGlassesButton(riskLevel: script.riskLevel) {
-                    prepareToSend()
                 }
             }
         }
