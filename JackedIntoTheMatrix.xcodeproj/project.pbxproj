@@ -8,8 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		0426F70E25ECB909A8D68A41 /* ScriptDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87BE4A9997026BAADA1C6DD2 /* ScriptDetailView.swift */; };
+		0B63FEAE8B7EBA7B502FABCA /* EvenG2Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B130F9581634CA08482DA4 /* EvenG2Configuration.swift */; };
 		199E8AD4782B2955B1626A51 /* DrillModeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1863318A7E104E61D96A4FB /* DrillModeView.swift */; };
+		36CAD2DB91FF62805FB8C9FE /* EvenG2SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E448277AC55C3A5250EEE674 /* EvenG2SessionManager.swift */; };
 		430410D1DA60486AC05A3E44 /* PlaybackEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE8C9D77DCE562580873B9A /* PlaybackEngine.swift */; };
+		48A355B0D5852CC548375852 /* EvenWebViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC8BC2A341CCC228D9FD418 /* EvenWebViewManager.swift */; };
 		4AB4407CAC743CAE1A30FD76 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA7168B1F68F9D73B2DD835 /* HomeView.swift */; };
 		4D9D408F12B086F6AB97A25E /* SwiftDataScriptRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A13BD5F65517706424D78D /* SwiftDataScriptRepository.swift */; };
 		51837D6C9BBA94B9FDE0F5A9 /* MockEvenSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E6359AC763686AACCDF0117 /* MockEvenSessionManager.swift */; };
@@ -51,7 +54,7 @@
 		065CF97B6C122E4ABCE8E229 /* ModelRouting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelRouting.swift; sourceTree = "<group>"; };
 		133107E493F2483D293BE50B /* ModelGenerationTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelGenerationTypes.swift; sourceTree = "<group>"; };
 		13EEC83686A58CB6F69E00F9 /* MockModelRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockModelRouter.swift; sourceTree = "<group>"; };
-		142A1589E80296764CBFD82C /* JackedIntoTheMatrix.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JackedIntoTheMatrix.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		142A1589E80296764CBFD82C /* JackedIntoTheMatrix.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = JackedIntoTheMatrix.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		19EBBBC7584EF08D72D3AD08 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		1A09E6BC69E5FFF14C2E89ED /* pass_lead_belay_gym_test.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = pass_lead_belay_gym_test.json; sourceTree = "<group>"; };
 		1E6359AC763686AACCDF0117 /* MockEvenSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockEvenSessionManager.swift; sourceTree = "<group>"; };
@@ -64,6 +67,7 @@
 		4CEFE18A4291EBC72EB94113 /* wire_three_way_light_switch.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = wire_three_way_light_switch.json; sourceTree = "<group>"; };
 		4DDACD02FEEE209A8E7A2B75 /* wearable_step_generation.prompt.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = wearable_step_generation.prompt.md; sourceTree = "<group>"; };
 		53669582BF63F7F788622ED8 /* GlassesStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlassesStatusView.swift; sourceTree = "<group>"; };
+		53B130F9581634CA08482DA4 /* EvenG2Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvenG2Configuration.swift; sourceTree = "<group>"; };
 		5E86A5B4926834E0CC97AF4C /* RecentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentsView.swift; sourceTree = "<group>"; };
 		695614A9FEE31FF251F2C829 /* Array+Safe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Safe.swift"; sourceTree = "<group>"; };
 		6F1B22D26C275203A71104C8 /* JackedIntoTheMatrixApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JackedIntoTheMatrixApp.swift; sourceTree = "<group>"; };
@@ -81,7 +85,9 @@
 		CE5F3EB91EA4958141294FEA /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
 		DC762207801D842137D49BCC /* garden_fresh_pesto_pasta.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = garden_fresh_pesto_pasta.json; sourceTree = "<group>"; };
 		DDA7168B1F68F9D73B2DD835 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		E448277AC55C3A5250EEE674 /* EvenG2SessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvenG2SessionManager.swift; sourceTree = "<group>"; };
 		E4E90C45AFE82FCB45909070 /* AppRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRouter.swift; sourceTree = "<group>"; };
+		EFC8BC2A341CCC228D9FD418 /* EvenWebViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvenWebViewManager.swift; sourceTree = "<group>"; };
 		F1863318A7E104E61D96A4FB /* DrillModeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrillModeView.swift; sourceTree = "<group>"; };
 		F23CB123496985FC355A308D /* G2DisplayPayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = G2DisplayPayload.swift; sourceTree = "<group>"; };
 		F567FAFB1DC351609524232A /* ScriptRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScriptRepository.swift; sourceTree = "<group>"; };
@@ -293,7 +299,10 @@
 		D9CD71918642BA67C810BAA5 /* Even */ = {
 			isa = PBXGroup;
 			children = (
+				53B130F9581634CA08482DA4 /* EvenG2Configuration.swift */,
+				E448277AC55C3A5250EEE674 /* EvenG2SessionManager.swift */,
 				CDC73F3DFE7CDCBC4AB2815B /* EvenSessionManaging.swift */,
+				EFC8BC2A341CCC228D9FD418 /* EvenWebViewManager.swift */,
 				BCED0C63B1FBB16478CDE1F3 /* G2PayloadFormatter.swift */,
 				1E6359AC763686AACCDF0117 /* MockEvenSessionManager.swift */,
 			);
@@ -359,6 +368,8 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+				};
 			};
 			buildConfigurationList = 84C9805EAC88461E68E6557B /* Build configuration list for PBXProject "JackedIntoTheMatrix" */;
 			developmentRegion = en;
@@ -429,7 +440,10 @@
 				A5E4016FB4EF84E6F25E1D85 /* CategoriesView.swift in Sources */,
 				199E8AD4782B2955B1626A51 /* DrillModeView.swift in Sources */,
 				BCA48FBC7353F9BD42A0D725 /* Enums.swift in Sources */,
+				0B63FEAE8B7EBA7B502FABCA /* EvenG2Configuration.swift in Sources */,
+				36CAD2DB91FF62805FB8C9FE /* EvenG2SessionManager.swift in Sources */,
 				A2BECF7659AD11536687FAB9 /* EvenSessionManaging.swift in Sources */,
+				48A355B0D5852CC548375852 /* EvenWebViewManager.swift in Sources */,
 				DBFD50E9DD4E0BD6272ECBF0 /* FavoritesView.swift in Sources */,
 				C44518573C3DE77C1BAED996 /* G2DisplayPayload.swift in Sources */,
 				F4BAB7EBFEA1D07B14120005 /* G2PayloadFormatter.swift in Sources */,
@@ -470,7 +484,6 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jackedintothematrix.app;
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 5.9;
@@ -551,7 +564,6 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jackedintothematrix.app;
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 5.9;

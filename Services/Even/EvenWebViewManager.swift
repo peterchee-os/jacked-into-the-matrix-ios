@@ -56,7 +56,7 @@ final class EvenWebViewManager: NSObject, EvenSessionManaging, ObservableObject 
         }
         
         guard bridgeReady else {
-            throw EvenSessionError.bridgeNotReady
+            throw EvenWebViewError.bridgeNotReady
         }
         
         // Format payload for Even SDK
@@ -95,6 +95,7 @@ final class EvenWebViewManager: NSObject, EvenSessionManaging, ObservableObject 
         webView?.isHidden = true // Hidden WebView - we only use it for the bridge
     }
     
+    @MainActor
     private func loadBridgePage() async {
         guard let webView = webView else { return }
         
@@ -170,6 +171,7 @@ final class EvenWebViewManager: NSObject, EvenSessionManaging, ObservableObject 
         }
     }
     
+    @MainActor
     private func executeJS(_ script: String) async -> String {
         guard let webView = webView else { return "error: no webview" }
         
@@ -260,6 +262,6 @@ extension EvenWebViewManager: WKScriptMessageHandler {
 
 // MARK: - Additional Errors
 
-extension EvenSessionError {
+enum EvenWebViewError: Error {
     case bridgeNotReady
 }

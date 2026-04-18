@@ -75,7 +75,7 @@ final class EvenG2SessionManager: NSObject, EvenSessionManaging, ObservableObjec
         }
 
         guard let characteristic = displayCharacteristic else {
-            throw EvenSessionError.characteristicNotFound
+            throw EvenG2SessionError.characteristicNotFound
         }
 
         // Format payload for G2 display
@@ -87,7 +87,7 @@ final class EvenG2SessionManager: NSObject, EvenSessionManaging, ObservableObjec
         lastSentPayload = payload
 
         // Wait for confirmation (with timeout)
-        try await withTimeout(seconds: 2) {
+        try await withG2Timeout(seconds: 2) {
             // In real implementation, wait for peripheral delegate callback
             try? await Task.sleep(nanoseconds: 100_000_000)
         }
@@ -128,7 +128,7 @@ final class EvenG2SessionManager: NSObject, EvenSessionManaging, ObservableObjec
 
         // Wait for connection with timeout
         do {
-            try await withTimeout(seconds: EvenG2Configuration.scanTimeout) {
+            try await withG2Timeout(seconds: EvenG2Configuration.scanTimeout) {
                 while self.state == .connecting {
                     try? await Task.sleep(nanoseconds: 100_000_000)
                 }
@@ -229,7 +229,7 @@ final class EvenG2SessionManager: NSObject, EvenSessionManaging, ObservableObjec
         }
     }
 
-    private func withTimeout<T>(seconds: TimeInterval, operation: () async throws -> T) async throws -> T {
+    private func withG2Timeout<T>(seconds: TimeInterval, operation: @escaping () async throws -> T) async throws -> T {
         try await withThrowingTaskGroup(of: T.self) { group in
             group.addTask {
                 try await operation()
@@ -237,7 +237,7 @@ final class EvenG2SessionManager: NSObject, EvenSessionManaging, ObservableObjec
 
             group.addTask {
                 try await Task.sleep(nanoseconds: UInt64(seconds * 1_000_000_000))
-                throw EvenSessionError.timeout
+                throw EvenG2SessionError.timeout
             }
 
             let result = try await group.next()!
@@ -310,7 +310,7 @@ extension EvenG2SessionManager: CBCentralManagerDelegate {
     }
 
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
-        if state == .connected {
+        if case .connected = state {
             // Unexpected disconnect - try to reconnect
             if reconnectAttempts < maxReconnectAttempts {
                 reconnectAttempts += 1
@@ -386,7 +386,7 @@ extension EvenG2SessionManager: CBPeripheralDelegate {
 
 // MARK: - Additional Errors
 
-extension EvenSessionError {
+enum EvenG2SessionError: Error {
     case characteristicNotFound
     case timeout
     case bluetoothUnavailable
