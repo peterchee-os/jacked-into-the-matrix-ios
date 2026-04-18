@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Jacked Into The Matrix - QR Code (Local Network)</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: #000;
+            color: #0f0;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        p {
+            margin-bottom: 30px;
+            opacity: 0.8;
+            text-align: center;
+        }
+        #qrcode {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .url {
+            font-family: monospace;
+            word-break: break-all;
+            text-align: center;
+            padding: 10px;
+            background: rgba(0, 255, 0, 0.1);
+            border-radius: 8px;
+            max-width: 100%;
+        }
+        .instructions {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(0, 255, 0, 0.05);
+            border: 1px solid #0f0;
+            border-radius: 8px;
+            max-width: 500px;
+        }
+        .instructions h2 {
+            margin-top: 0;
+        }
+        .instructions ol {
+            text-align: left;
+            line-height: 1.8;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔌 Jacked Into The Matrix</h1>
+    <p>Scan this QR code with the Even Realities app</p>
+    
+    <div id="qrcode"></div>
+    
+    <div class="url" id="url"></div>
+    
+    <div class="instructions">
+        <h2>How to load on your G2 glasses:</h2>
+        <ol>
+            <li>Make sure your Mac and iPhone are on the same Wi-Fi network</li>
+            <li>Open the Even Realities app on your iPhone</li>
+            <li>Go to "Apps" → "Add" → "Sideload"</li>
+            <li>Scan this QR code</li>
+            <li>The app will load on your G2 glasses!</li>
+        </ol>
+        <p><strong>Important:</strong> Both devices must be on the same Wi-Fi network</p>
+    </div>
+    
+    <script>
+        // Hardcoded local network URL
+        const localUrl = 'http://172.16.94.244:5174/';
+        
+        // Display the URL
+        document.getElementById('url').textContent = localUrl;
+        
+        // Generate QR code
+        new QRCode(document.getElementById("qrcode"), {
+            text: localUrl,
+            width: 256,
+            height: 256,
+            colorDark : "#000000",
+            colorLight : "#ffffff",
+            correctLevel : QRCode.CorrectLevel.H
+        });
+    </script>
+</body>
+</html>

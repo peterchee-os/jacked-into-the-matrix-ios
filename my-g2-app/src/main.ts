@@ -96,6 +96,13 @@ async function init() {
     bridge = await waitForEvenAppBridge();
     console.log('✅ Connected to G2 glasses!');
     
+    // HARDWARE QUIRK: The Even App WebView injects the bridge, but the physical glasses
+    // sometimes need a split second to clear their internal buffer before accepting the
+    // startup page payload over BLE.
+    console.log('Waiting for BLE buffer to clear...');
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    console.log('BLE ready, displaying content');
+    
     // Show script menu
     showScriptMenu();
     
