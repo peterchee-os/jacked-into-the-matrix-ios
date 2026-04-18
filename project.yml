@@ -1,0 +1,22 @@
+name: JackedIntoTheMatrix
+targets:
+  JackedIntoTheMatrix:
+    type: application
+    platform: iOS
+    deploymentTarget: "17.0"
+    sources:
+      - App
+      - Models
+      - Services
+      - Features
+      - Core
+      - Resources
+      - Prompts
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.jackedintothematrix.app
+        INFOPLIST_FILE: App/Info.plist
+        SWIFT_VERSION: "5.9"
+    preBuildScripts:
+      - script: echo "Building Jacked Into The Matrix"
+        name: Pre-build
