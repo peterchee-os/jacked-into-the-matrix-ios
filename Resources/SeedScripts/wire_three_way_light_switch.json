@@ -1,0 +1,16 @@
+{
+  "title": "Wire a Three-Way Light Switch",
+  "category": "homeDIY",
+  "summary": "Hands-free overview for wiring a three-way switch.",
+  "riskLevel": "high",
+  "steps": [
+    "Turn off the breaker.",
+    "Confirm power is off with a tester.",
+    "Identify the common wire.",
+    "Identify the traveler wires.",
+    "Connect the common terminal.",
+    "Connect both traveler terminals.",
+    "Attach and secure ground wires.",
+    "Restore power and test both switches."
+  ]
+}

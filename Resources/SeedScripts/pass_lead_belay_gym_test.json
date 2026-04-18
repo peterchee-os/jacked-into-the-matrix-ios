@@ -1,0 +1,15 @@
+{
+  "title": "Pass the Lead Belay Gym Test",
+  "category": "climbingOutdoor",
+  "summary": "Wearable rehearsal sequence for common lead belay checks.",
+  "riskLevel": "high",
+  "steps": [
+    "Check harness is doubled back.",
+    "Check knot is dressed and finished.",
+    "Check belay device is threaded correctly.",
+    "Keep brake hand on rope.",
+    "Use standard climbing commands.",
+    "Manage slack without short-roping.",
+    "Lower with control."
+  ]
+}

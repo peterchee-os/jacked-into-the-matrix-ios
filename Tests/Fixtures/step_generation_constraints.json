@@ -1,0 +1,7 @@
+{
+  "maxPrimaryTextCharacters": 80,
+  "maxSecondaryTextCharacters": 40,
+  "maxSteps": 12,
+  "preserveWarnings": true,
+  "requireVerbFirst": true
+}

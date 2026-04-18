@@ -1,0 +1,15 @@
+{
+  "title": "Update OpenClaw via CLI",
+  "category": "softwareCLI",
+  "summary": "Compact CLI workflow for updating OpenClaw.",
+  "riskLevel": "medium",
+  "steps": [
+    "Check the current OpenClaw version.",
+    "Stop active services if required.",
+    "Pull the latest release or package.",
+    "Run the update command.",
+    "Restart the gateway or app.",
+    "Verify the new version.",
+    "Check logs for errors."
+  ]
+}
