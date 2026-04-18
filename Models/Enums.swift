@@ -1,6 +1,8 @@
 import Foundation
 
-enum ScriptCategory: String, Codable, CaseIterable {
+enum ScriptCategory: String, Codable, CaseIterable, Identifiable {
+    var id: String { rawValue }
+
     case homeDIY
     case softwareCLI
     case climbingOutdoor
