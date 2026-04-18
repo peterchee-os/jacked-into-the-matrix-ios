@@ -1,4 +1,5 @@
 import Foundation
+import SwiftUI
 
 final class AppRouter: ObservableObject {
     enum Tab: String, CaseIterable {
@@ -11,4 +12,17 @@ final class AppRouter: ObservableObject {
     }
 
     @Published var selectedTab: Tab = .home
+    @Published var navigationPath = NavigationPath()
+
+    func navigateToScript(_ script: Script) {
+        navigationPath.append(script)
+    }
+
+    func navigateBack() {
+        navigationPath.removeLast()
+    }
+
+    func navigateToRoot() {
+        navigationPath.removeLast(navigationPath.count)
+    }
 }

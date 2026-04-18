@@ -3,17 +3,21 @@ import SwiftData
 
 struct HomeView: View {
     @EnvironmentObject private var appEnvironment: AppEnvironment
+    @EnvironmentObject private var router: AppRouter
     @Query(sort: \Script.title) private var scripts: [Script]
     @State private var recentScripts: [Script] = []
     @State private var favoriteScripts: [Script] = []
 
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $router.navigationPath) {
             List {
                 if !recentScripts.isEmpty {
                     Section("Recent") {
                         ForEach(recentScripts.prefix(5)) { script in
                             ScriptRow(script: script)
+                                .onTapGesture {
+                                    router.navigateToScript(script)
+                                }
                         }
                     }
                 }
@@ -22,6 +26,9 @@ struct HomeView: View {
                     Section("Favorites") {
                         ForEach(favoriteScripts) { script in
                             ScriptRow(script: script)
+                                .onTapGesture {
+                                    router.navigateToScript(script)
+                                }
                         }
                     }
                 }
@@ -29,10 +36,16 @@ struct HomeView: View {
                 Section("All Scripts") {
                     ForEach(scripts) { script in
                         ScriptRow(script: script)
+                            .onTapGesture {
+                                router.navigateToScript(script)
+                            }
                     }
                 }
             }
             .navigationTitle("Home")
+            .navigationDestination(for: Script.self) { script in
+                ScriptDetailView(script: script)
+            }
             .task {
                 await loadRecentsAndFavorites()
             }
