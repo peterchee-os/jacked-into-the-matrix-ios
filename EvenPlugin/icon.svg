@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <!-- Black background -->
+  <rect width="1024" height="1024" fill="#000000"/>
+  
+  <!-- Matrix rain effect - vertical lines -->
+  <g fill="#00ff00" opacity="0.3">
+    <rect x="100" y="0" width="4" height="300"/>
+    <rect x="200" y="100" width="4" height="400"/>
+    <rect x="300" y="50" width="4" height="250"/>
+    <rect x="400" y="200" width="4" height="350"/>
+    <rect x="500" y="0" width="4" height="400"/>
+    <rect x="600" y="150" width="4" height="300"/>
+    <rect x="700" y="80" width="4" height="380"/>
+    <rect x="800" y="200" width="4" height="250"/>
+    <rect x="900" y="50" width="4" height="350"/>
+  </g>
+  
+  <!-- Matrix code characters -->
+  <g fill="#00ff00" font-family="monospace" font-size="40" opacity="0.6">
+    <text x="120" y="100">10</text>
+    <text x="220" y="200">01</text>
+    <text x="320" y="150">11</text>
+    <text x="420" y="300">00</text>
+    <text x="520" y="250">10</text>
+    <text x="620" y="350">01</text>
+    <text x="720" y="280">11</text>
+    <text x="820" y="400">00</text>
+    <text x="920" y="200">10</text>
+  </g>
+  
+  <!-- Central plug/socket icon -->
+  <g transform="translate(512, 512)">
+    <!-- Outer circle (socket) -->
+    <circle cx="0" cy="0" r="200" fill="none" stroke="#00ff00" stroke-width="12"/>
+    
+    <!-- Inner plug -->
+    <rect x="-60" y="-120" width="120" height="180" rx="10" fill="#00ff00"/>
+    
+    <!-- Plug prongs -->
+    <rect x="-40" y="60" width="20" height="60" fill="#00ff00"/>
+    <rect x="20" y="60" width="20" height="60" fill="#00ff00"/>
+    
+    <!-- Connection glow -->
+    <circle cx="0" cy="0" r="150" fill="none" stroke="#00ff00" stroke-width="4" opacity="0.5">
+      <animate attributeName="r" values="150;160;150" dur="2s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.5;0.8;0.5" dur="2s" repeatCount="indefinite"/>
+    </circle>
+    
+    <!-- Electric spark -->
+    <path d="M -80 -80 L -40 -40 L -60 0 L -20 20" 
+          fill="none" stroke="#00ff00" stroke-width="6" 
+          stroke-linecap="round" stroke-linejoin="round">
+      <animate attributeName="opacity" values="0;1;0" dur="1.5s" repeatCount="indefinite"/>
+    </path>
+    
+    <path d="M 80 -80 L 40 -40 L 60 0 L 20 20" 
+          fill="none" stroke="#00ff00" stroke-width="6" 
+          stroke-linecap="round" stroke-linejoin="round">
+      <animate attributeName="opacity" values="1;0;1" dur="1.5s" repeatCount="indefinite"/>
+    </path>
+  </g>
+  
+  <!-- Title text -->
+  <text x="512" y="850" 
+        font-family="monospace" font-size="48" 
+        fill="#00ff00" text-anchor="middle"
+        font-weight="bold">JACKED IN</text>
+  
+  <!-- Small decorative elements -->
+  <g fill="#00ff00" opacity="0.4">
+    <circle cx="150" cy="800" r="8"/>
+    <circle cx="874" cy="800" r="8"/>
+    <circle cx="150" cy="224" r="8"/>
+    <circle cx="874" cy="224" r="8"/>
+  </g>
+  
+  <!-- Corner brackets -->
+  <g stroke="#00ff00" stroke-width="6" fill="none">
+    <!-- Top left -->
+    <path d="M 50 150 L 50 50 L 150 50"/>
+    <!-- Top right -->
+    <path d="M 874 50 L 974 50 L 974 150"/>
+    <!-- Bottom left -->
+    <path d="M 50 874 L 50 974 L 150 974"/>
+    <!-- Bottom right -->
+    <path d="M 874 974 L 974 974 L 974 874"/>
+  </g>
+</svg>
