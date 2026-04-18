@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My First G2 App</title>
+    <script src="https://unpkg.com/@evenrealities/even_hub_sdk@latest/dist/index.umd.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .status {
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .status.connecting { background: #fff3cd; }
+        .status.connected { background: #d4edda; }
+        .status.error { background: #f8d7da; }
+        button {
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 8px;
+            border: none;
+            background: #007AFF;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover { background: #0056b3; }
+        .info {
+            margin-top: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🥽 My First G2 App</h1>
+    
+    <div id="status" class="status connecting">
+        Connecting to G2 glasses...
+    </div>
+    
+    <button onclick="showHello()" id="helloBtn" disabled>
+        Say Hello on Glasses
+    </button>
+    
+    <div class="info" id="info">
+        Waiting for SDK...
+    </div>
+
+    <script>
+        let bridge = null;
+        const statusDiv = document.getElementById('status');
+        const helloBtn = document.getElementById('helloBtn');
+        const infoDiv = document.getElementById('info');
+        
+        async function init() {
+            try {
+                infoDiv.textContent = 'Loading Even SDK...';
+                
+                // Wait for the bridge to be ready
+                const { waitForEvenAppBridge } = window.EvenHubSDK;
+                bridge = await waitForEvenAppBridge();
+                
+                statusDiv.className = 'status connected';
+                statusDiv.textContent = '✅ Connected to G2 glasses!';
+                helloBtn.disabled = false;
+                
+                infoDiv.textContent = 'Bridge initialized successfully!\nReady to display on glasses.';
+                
+                console.log('G2 Bridge ready:', bridge);
+                
+            } catch (error) {
+                statusDiv.className = 'status error';
+                statusDiv.textContent = '❌ Failed to connect: ' + error.message;
+                infoDiv.textContent = 'Error: ' + error.message;
+                console.error('Failed to initialize:', error);
+            }
+        }
+        
+        async function showHello() {
+            if (!bridge) return;
+            
+            try {
+                infoDiv.textContent = 'Creating text container...';
+                
+                // Create a text container for the glasses
+                // This uses the proper SDK API
+                const { TextContainerProperty } = window.EvenHubSDK;
+                
+                const textContainer = new TextContainerProperty({
+                    xPosition: 0,
+                    yPosition: 0,
+                    width: 576,
+                    height: 288,
+                    borderWidth: 0,
+                    borderColor: 5,
+                    paddingLength: 4,
+                    containerID: 1,
+                    containerName: 'main',
+                    content: 'Hello from G2! 🎉',
+                    isEventCapture: 1,
+                });
+                
+                infoDiv.textContent = 'Sending to glasses...';
+                
+                // Create the startup page with the container
+                const result = await bridge.createStartUpPageContainer(1, [textContainer]);
+                
+                // result: 0 = success, 1 = invalid, 2 = oversize, 3 = out of memory
+                const messages = {
+                    0: '✅ Success! Text displayed on glasses',
+                    1: '❌ Invalid parameters',
+                    2: '❌ Content oversize',
+                    3: '❌ Out of memory'
+                };
+                
+                infoDiv.textContent = 'Result: ' + (messages[result] || 'Unknown result: ' + result);
+                
+            } catch (error) {
+                infoDiv.textContent = 'Error: ' + error.message;
+                console.error('Failed to display:', error);
+            }
+        }
+        
+        // Initialize when page loads
+        init();
+    </script>
+</body>
+</html>
