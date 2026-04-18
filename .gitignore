@@ -14,5 +14,8 @@ Packages/
 .env.local
 Secrets.plist
 
+# XcodeGen local settings
+project.local.yml
+
 # macOS
 .DS_Store

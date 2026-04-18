@@ -17,6 +17,8 @@ targets:
         PRODUCT_BUNDLE_IDENTIFIER: com.jackedintothematrix.app
         INFOPLIST_FILE: App/Info.plist
         SWIFT_VERSION: "5.9"
+        CODE_SIGN_STYLE: Automatic
+        DEVELOPMENT_TEAM: ""
     preBuildScripts:
       - script: echo "Building Jacked Into The Matrix"
         name: Pre-build
