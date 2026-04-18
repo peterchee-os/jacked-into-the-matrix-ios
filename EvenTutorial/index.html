@@ -4,31 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My First G2 App</title>
-    <script src="https://unpkg.com/@evenrealities/even_hub_sdk@latest/dist/index.umd.js"></script>
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, sans-serif;
             padding: 20px;
             background: #f5f5f5;
+            max-width: 600px;
+            margin: 0 auto;
         }
         .status {
-            padding: 10px;
+            padding: 15px;
             border-radius: 8px;
             margin-bottom: 20px;
+            font-weight: 500;
         }
-        .status.connecting { background: #fff3cd; }
-        .status.connected { background: #d4edda; }
-        .status.error { background: #f8d7da; }
+        .status.connecting { background: #fff3cd; color: #856404; }
+        .status.connected { background: #d4edda; color: #155724; }
+        .status.error { background: #f8d7da; color: #721c24; }
         button {
-            padding: 12px 24px;
-            font-size: 16px;
+            padding: 15px 30px;
+            font-size: 18px;
             border-radius: 8px;
             border: none;
             background: #007AFF;
             color: white;
             cursor: pointer;
+            width: 100%;
         }
-        button:hover { background: #0056b3; }
+        button:hover:not(:disabled) { background: #0056b3; }
+        button:disabled { background: #ccc; cursor: not-allowed; }
         .info {
             margin-top: 20px;
             padding: 15px;
@@ -36,6 +40,20 @@
             border-radius: 8px;
             font-family: monospace;
             font-size: 12px;
+            white-space: pre-wrap;
+        }
+        .g2-display {
+            background: #000;
+            color: #0f0;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-family: monospace;
+            text-align: center;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
     </style>
 </head>
@@ -46,84 +64,61 @@
         Connecting to G2 glasses...
     </div>
     
+    <div class="g2-display" id="g2Display">
+        G2 Display Preview
+    </div>
+    
     <button onclick="showHello()" id="helloBtn" disabled>
         Say Hello on Glasses
     </button>
     
     <div class="info" id="info">
-        Waiting for SDK...
+        Initializing...
     </div>
 
-    <script>
+    <script type="module">
+        import { waitForEvenAppBridge, TextContainerProperty, CreateStartUpPageContainer } from 'https://unpkg.com/@evenrealities/even_hub_sdk@latest/dist/index.esm.js'
+        
         let bridge = null;
         const statusDiv = document.getElementById('status');
         const helloBtn = document.getElementById('helloBtn');
         const infoDiv = document.getElementById('info');
+        const g2Display = document.getElementById('g2Display');
         
         async function init() {
             try {
                 infoDiv.textContent = 'Loading Even SDK...';
                 
-                // Check if SDK loaded
-                console.log('window.EvenHubSDK:', window.EvenHubSDK);
-                console.log('Available globals:', Object.keys(window).filter(k => k.toLowerCase().includes('even')));
-                
-                if (!window.EvenHubSDK) {
-                    // Try alternative SDK access patterns
-                    if (window.evenHubSDK) {
-                        window.EvenHubSDK = window.evenHubSDK;
-                    } else if (window.EvenRealities) {
-                        window.EvenHubSDK = window.EvenRealities;
-                    }
-                }
-                
-                if (!window.EvenHubSDK) {
-                    throw new Error('Even SDK not found. Make sure you\'re running in the Even Hub simulator or app.');
-                }
-                
                 // Wait for the bridge to be ready
-                const { waitForEvenAppBridge } = window.EvenHubSDK;
-                
-                if (!waitForEvenAppBridge) {
-                    throw new Error('waitForEvenAppBridge not found in SDK');
-                }
-                
                 bridge = await waitForEvenAppBridge();
                 
                 statusDiv.className = 'status connected';
                 statusDiv.textContent = '✅ Connected to G2 glasses!';
                 helloBtn.disabled = false;
+                g2Display.textContent = 'Ready to display!';
                 
-                infoDiv.textContent = 'Bridge initialized successfully!\nReady to display on glasses.';
+                infoDiv.textContent = 'Bridge initialized successfully!\nClick the button to display on glasses.';
                 
                 console.log('G2 Bridge ready:', bridge);
                 
             } catch (error) {
                 statusDiv.className = 'status error';
-                statusDiv.textContent = '❌ Failed to connect: ' + error.message;
-                infoDiv.innerHTML = 'Error: ' + error.message + '<br><br>' +
-                    'Debug info:<br>' +
-                    'EvenHubSDK: ' + (window.EvenHubSDK ? 'found' : 'not found') + '<br>' +
-                    'User Agent: ' + navigator.userAgent.substring(0, 50) + '...';
+                statusDiv.textContent = '❌ Failed to connect';
+                g2Display.textContent = 'Not connected';
+                infoDiv.innerHTML = 'Error: ' + error.message + '\n\n' +
+                    'Make sure you are running this in the Even Hub simulator or app.\n' +
+                    'The SDK only works inside the Even Hub environment.';
                 console.error('Failed to initialize:', error);
             }
         }
         
-        async function showHello() {
+        window.showHello = async function() {
             if (!bridge) return;
             
             try {
                 infoDiv.textContent = 'Creating text container...';
                 
-                // Create a text container for the glasses
-                // This uses the proper SDK API
-                const { TextContainerProperty } = window.EvenHubSDK || {};
-                
-                if (!TextContainerProperty) {
-                    throw new Error('TextContainerProperty not found in SDK');
-                }
-                
-                const textContainer = new TextContainerProperty({
+                const mainText = new TextContainerProperty({
                     xPosition: 0,
                     yPosition: 0,
                     width: 576,
@@ -139,8 +134,10 @@
                 
                 infoDiv.textContent = 'Sending to glasses...';
                 
-                // Create the startup page with the container
-                const result = await bridge.createStartUpPageContainer(1, [textContainer]);
+                const result = await bridge.createStartUpPageContainer(new CreateStartUpPageContainer({
+                    containerTotalNum: 1,
+                    textObject: [mainText],
+                }));
                 
                 // result: 0 = success, 1 = invalid, 2 = oversize, 3 = out of memory
                 const messages = {
@@ -150,7 +147,11 @@
                     3: '❌ Out of memory'
                 };
                 
-                infoDiv.textContent = 'Result: ' + (messages[result] || 'Unknown result: ' + result);
+                infoDiv.textContent = messages[result] || 'Unknown result: ' + result;
+                
+                if (result === 0) {
+                    g2Display.textContent = 'Hello from G2! 🎉';
+                }
                 
             } catch (error) {
                 infoDiv.textContent = 'Error: ' + error.message;
