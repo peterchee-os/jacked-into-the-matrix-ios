@@ -33,7 +33,16 @@ final class AppEnvironment: ObservableObject {
         }
         
         let playbackEngine = PlaybackEngine()
-        let evenManager = MockEvenSessionManager()
+        
+        // Use real Even G2 manager if available, otherwise fall back to mock
+        #if targetEnvironment(simulator)
+        let evenManager: EvenSessionManaging = MockEvenSessionManager()
+        print("Running on simulator - using mock Even session manager")
+        #else
+        let evenManager: EvenSessionManaging = EvenG2SessionManager()
+        print("Running on device - using real Even G2 session manager")
+        #endif
+        
         let modelRouter = MockModelRouter()
         let analytics = ConsoleAnalyticsService()
 

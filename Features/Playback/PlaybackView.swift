@@ -71,16 +71,79 @@ struct PlaybackView: View {
         .onAppear {
             // Sync to glasses when view appears
             syncToGlasses()
+
+            // Set up glasses input handlers
+            setupGlassesInputHandlers()
         }
         .onChange(of: currentStepIndex) {
             syncToGlasses()
         }
+        .onDisappear {
+            // Clear glasses input handlers
+            clearGlassesInputHandlers()
+        }
     }
 
     private func syncToGlasses() {
-        // TODO: Send current step to Even G2 glasses
-        // let payload = G2PayloadFormatter.format(script: script, stepIndex: currentStepIndex, mode: mode)
-        // appEnvironment.evenSessionManager.send(payload: payload)
+        guard let state = appEnvironment.playbackEngine.playbackState else { return }
+
+        let stepIndex = state.currentStepIndex
+        let sortedSteps = script.steps.sorted(by: { $0.orderIndex < $1.orderIndex })
+        guard let step = sortedSteps[safe: stepIndex] else { return }
+
+        // Format payload for G2 display
+        let payload = G2DisplayPayload(
+            scriptTitle: script.title,
+            stepIndex: stepIndex,
+            totalSteps: script.steps.count,
+            primaryText: step.text,
+            secondaryText: step.warning ?? step.tip,
+            mode: state.mode
+        )
+
+        // Send to glasses
+        Task {
+            try? await appEnvironment.evenSessionManager.send(payload: payload)
+        }
+    }
+
+    private func setupGlassesInputHandlers() {
+        // Set up callbacks for glasses button presses
+        // This is a no-op on simulator, but works on device with EvenG2SessionManager
+        #if !targetEnvironment(simulator)
+        if let evenManager = appEnvironment.evenSessionManager as? EvenG2SessionManager {
+            evenManager.onNextStep = { [weak appEnvironment] in
+                DispatchQueue.main.async {
+                    appEnvironment?.playbackEngine.next(totalSteps: script.steps.count)
+                }
+            }
+
+            evenManager.onPreviousStep = { [weak appEnvironment] in
+                DispatchQueue.main.async {
+                    appEnvironment?.playbackEngine.previous()
+                }
+            }
+
+            evenManager.onScrollUp = {
+                // Could scroll content up
+            }
+
+            evenManager.onScrollDown = {
+                // Could scroll content down
+            }
+        }
+        #endif
+    }
+
+    private func clearGlassesInputHandlers() {
+        #if !targetEnvironment(simulator)
+        if let evenManager = appEnvironment.evenSessionManager as? EvenG2SessionManager {
+            evenManager.onNextStep = nil
+            evenManager.onPreviousStep = nil
+            evenManager.onScrollUp = nil
+            evenManager.onScrollDown = nil
+        }
+        #endif
     }
 }
 
