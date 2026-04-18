@@ -109,9 +109,9 @@ struct PlaybackView: View {
 
     private func setupGlassesInputHandlers() {
         // Set up callbacks for glasses button presses
-        // This is a no-op on simulator, but works on device with EvenG2SessionManager
+        // Works with both EvenWebViewManager (hybrid) and EvenG2SessionManager (native BLE)
         #if !targetEnvironment(simulator)
-        if let evenManager = appEnvironment.evenSessionManager as? EvenG2SessionManager {
+        if let evenManager = appEnvironment.evenSessionManager as? EvenWebViewManager {
             evenManager.onNextStep = { [weak appEnvironment] in
                 DispatchQueue.main.async {
                     appEnvironment?.playbackEngine.next(totalSteps: script.steps.count)
@@ -137,7 +137,7 @@ struct PlaybackView: View {
 
     private func clearGlassesInputHandlers() {
         #if !targetEnvironment(simulator)
-        if let evenManager = appEnvironment.evenSessionManager as? EvenG2SessionManager {
+        if let evenManager = appEnvironment.evenSessionManager as? EvenWebViewManager {
             evenManager.onNextStep = nil
             evenManager.onPreviousStep = nil
             evenManager.onScrollUp = nil

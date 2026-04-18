@@ -34,13 +34,14 @@ final class AppEnvironment: ObservableObject {
         
         let playbackEngine = PlaybackEngine()
         
-        // Use real Even G2 manager if available, otherwise fall back to mock
+        // Use hybrid WebView approach for Even G2 integration
+        // This loads the Even SDK in a hidden WebView and communicates via JS bridge
         #if targetEnvironment(simulator)
         let evenManager: EvenSessionManaging = MockEvenSessionManager()
         print("Running on simulator - using mock Even session manager")
         #else
-        let evenManager: EvenSessionManaging = EvenG2SessionManager()
-        print("Running on device - using real Even G2 session manager")
+        let evenManager: EvenSessionManaging = EvenWebViewManager()
+        print("Running on device - using Even WebView bridge")
         #endif
         
         let modelRouter = MockModelRouter()
