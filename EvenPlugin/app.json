@@ -1,0 +1,12 @@
+{
+  "name": "Jacked Into The Matrix",
+  "bundleId": "com.thinkspace.jackedintothematrix",
+  "version": "1.0.0",
+  "buildNumber": "1",
+  "entry": "index.html",
+  "icon": "icon.png",
+  "permissions": ["microphone"],
+  "author": "Thinkspace Corp",
+  "description": "Wearable step-by-step instructions for Even G2 glasses",
+  "category": "Productivity"
+}

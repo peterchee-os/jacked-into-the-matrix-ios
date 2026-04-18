@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>Jacked Into The Matrix</title>
+    <script src="https://unpkg.com/@evenrealities/even_hub_sdk@latest/dist/index.umd.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #000;
+            color: #0f0;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            padding: 20px;
+            max-width: 100%;
+        }
+        
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .script-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .script-card {
+            background: rgba(0, 255, 0, 0.1);
+            border: 1px solid #0f0;
+            border-radius: 8px;
+            padding: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .script-card:hover, .script-card.active {
+            background: rgba(0, 255, 0, 0.2);
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+        }
+        
+        .script-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        
+        .script-category {
+            font-size: 12px;
+            opacity: 0.7;
+            text-transform: uppercase;
+        }
+        
+        .script-risk {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            margin-top: 8px;
+        }
+        
+        .risk-low { background: rgba(0, 255, 0, 0.3); }
+        .risk-medium { background: rgba(255, 255, 0, 0.3); color: #ff0; }
+        .risk-high { background: rgba(255, 0, 0, 0.3); color: #f00; }
+        
+        .status-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 10px 20px;
+            background: rgba(0, 0, 0, 0.9);
+            border-bottom: 1px solid #0f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+        }
+        
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+        }
+        
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #f00;
+            animation: pulse 2s infinite;
+        }
+        
+        .status-dot.connected {
+            background: #0f0;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .playback-view {
+            display: none;
+            position: fixed;
+            top: 50px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #000;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        
+        .playback-view.active {
+            display: block;
+        }
+        
+        .step-display {
+            background: rgba(0, 255, 0, 0.05);
+            border: 1px solid #0f0;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+        
+        .step-number {
+            font-size: 14px;
+            opacity: 0.7;
+            margin-bottom: 12px;
+        }
+        
+        .step-text {
+            font-size: 20px;
+            line-height: 1.5;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        .btn {
+            background: rgba(0, 255, 0, 0.2);
+            border: 1px solid #0f0;
+            color: #0f0;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        .btn:hover {
+            background: rgba(0, 255, 0, 0.3);
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.4);
+        }
+        
+        .btn-back {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: transparent;
+            border: none;
+            font-size: 24px;
+        }
+        
+        .progress-bar {
+            height: 4px;
+            background: rgba(0, 255, 0, 0.2);
+            border-radius: 2px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: #0f0;
+            transition: width 0.3s;
+        }
+    </style>
+</head>
+<body>
+    <div class="status-bar">
+        <div class="status-indicator">
+            <div class="status-dot" id="statusDot"></div>
+            <span id="statusText">Connecting...</span>
+        </div>
+        <span>Jacked Into The Matrix</span>
+    </div>
+    
+    <div class="container" style="margin-top: 60px;">
+        <h1>🔌 Jacked Into The Matrix</h1>
+        
+        <div class="script-list" id="scriptList">
+            <!-- Scripts loaded dynamically -->
+        </div>
+    </div>
+    
+    <div class="playback-view" id="playbackView">
+        <button class="btn btn-back" onclick="showScriptList()">←</button>
+        
+        <h2 id="playbackTitle"></h2>
+        
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+        
+        <div class="step-display">
+            <div class="step-number" id="stepNumber">Step 1 of 5</div>
+            <div class="step-text" id="stepText">Loading...</div>
+        </div>
+        
+        <div class="controls">
+            <button class="btn" onclick="previousStep()">← Previous</button>
+            <button class="btn" onclick="nextStep()">Next →</button>
+        </div>
+        
+        <p style="text-align: center; margin-top: 20px; opacity: 0.7; font-size: 12px;">
+            Use G2 touchpads: Single tap = Next, Double tap = Previous
+        </p>
+    </div>
+
+    <script>
+        // Script data
+        const scripts = [
+            {
+                id: 'wire-switch',
+                title: 'Wire a Three-Way Light Switch',
+                category: 'Home DIY',
+                risk: 'high',
+                steps: [
+                    'Turn off the breaker controlling the circuit',
+                    'Verify power is off with a non-contact voltage tester',
+                    'Remove existing switch plates and switches',
+                    'Identify the common wire (usually black or marked)',
+                    'Identify the two traveler wires (usually red and black)',
+                    'Connect the common wire to the common terminal (dark screw)',
+                    'Connect traveler wires to the brass traveler terminals',
+                    'Connect ground wire to green ground screw',
+                    'Secure wire nuts on all connections',
+                    'Carefully fold wires into box and mount switch',
+                    'Repeat at the second switch location',
+                    'Turn breaker on and test both switches'
+                ]
+            },
+            {
+                id: 'openclaw-update',
+                title: 'Update OpenClaw via CLI',
+                category: 'Software / CLI',
+                risk: 'medium',
+                steps: [
+                    'Check current version: openclaw version',
+                    'Review release notes for breaking changes',
+                    'Stop the gateway: openclaw gateway stop',
+                    'Backup config: cp ~/.openclaw/config.json ~/.openclaw/config.json.bak',
+                    'Run update: openclaw update',
+                    'Start gateway: openclaw gateway start',
+                    'Verify status: openclaw status',
+                    'Check logs: openclaw logs --tail 50'
+                ]
+            },
+            {
+                id: 'belay-test',
+                title: 'Pass the Lead Belay Gym Test',
+                category: 'Climbing / Outdoor',
+                risk: 'high',
+                steps: [
+                    'Check climber\'s harness is doubled back at waist and legs',
+                    'Verify climber\'s tie-in knot is dressed and has backup',
+                    'Confirm belay device is compatible with rope diameter',
+                    'Thread rope through belay device correctly (follow diagram)',
+                    'Lock carabiner through device and harness belay loop',
+                    'Perform partner check: harness, knot, device, carabiner locked',
+                    'Establish communication with standard commands',
+                    'Keep brake hand on rope at all times',
+                    'Give slack smoothly as climber clips',
+                    'Take in slack promptly after clips',
+                    'Never short-rope the climber',
+                    'Prepare to catch a fall with brake hand locked down'
+                ]
+            },
+            {
+                id: 'pesto-pasta',
+                title: 'Garden Fresh Pesto Pasta',
+                category: 'Cooking',
+                risk: 'low',
+                steps: [
+                    'Bring large pot of salted water to boil',
+                    'Add pasta and cook until al dente (check package time)',
+                    'While pasta cooks, blend basil, garlic, nuts, and parmesan',
+                    'Slowly drizzle in olive oil while blending to emulsify',
+                    'Taste pesto and season with salt if needed',
+                    'Before draining, reserve 1 cup of pasta water',
+                    'Drain pasta, saving some cooking water',
+                    'Toss hot pasta with pesto in the pot',
+                    'Add pasta water a splash at a time to loosen sauce',
+                    'Serve immediately with extra parmesan on top'
+                ]
+            }
+        ];
+        
+        // State
+        let currentScript = null;
+        let currentStepIndex = 0;
+        let evenBridge = null;
+        
+        // Initialize
+        async function init() {
+            renderScriptList();
+            
+            try {
+                const { waitForEvenAppBridge } = window.EvenHubSDK;
+                evenBridge = await waitForEvenAppBridge();
+                
+                document.getElementById('statusDot').classList.add('connected');
+                document.getElementById('statusText').textContent = 'G2 Connected';
+                
+                // Listen for G2 input
+                window._listenEvenAppMessage = handleG2Input;
+                
+                console.log('Connected to G2 glasses');
+            } catch (err) {
+                document.getElementById('statusText').textContent = 'G2 Not Connected';
+                console.error('Failed to connect to G2:', err);
+            }
+        }
+        
+        // Render script list
+        function renderScriptList() {
+            const list = document.getElementById('scriptList');
+            list.innerHTML = scripts.map(script => `
+                <div class="script-card" onclick="selectScript('${script.id}')">
+                    <div class="script-title">${script.title}</div>
+                    <div class="script-category">${script.category}</div>
+                    <span class="script-risk risk-${script.risk}">${script.risk.toUpperCase()} RISK</span>
+                </div>
+            `).join('');
+        }
+        
+        // Select script
+        function selectScript(scriptId) {
+            currentScript = scripts.find(s => s.id === scriptId);
+            currentStepIndex = 0;
+            
+            document.getElementById('playbackTitle').textContent = currentScript.title;
+            updateStepDisplay();
+            
+            document.getElementById('playbackView').classList.add('active');
+            
+            // Send to G2 glasses
+            if (evenBridge) {
+                sendToGlasses();
+            }
+        }
+        
+        // Show script list
+        function showScriptList() {
+            document.getElementById('playbackView').classList.remove('active');
+            currentScript = null;
+        }
+        
+        // Update step display
+        function updateStepDisplay() {
+            if (!currentScript) return;
+            
+            const step = currentScript.steps[currentStepIndex];
+            document.getElementById('stepNumber').textContent = 
+                `Step ${currentStepIndex + 1} of ${currentScript.steps.length}`;
+            document.getElementById('stepText').textContent = step;
+            
+            // Update progress bar
+            const progress = ((currentStepIndex + 1) / currentScript.steps.length) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+        }
+        
+        // Next step
+        function nextStep() {
+            if (!currentScript || currentStepIndex >= currentScript.steps.length - 1) return;
+            currentStepIndex++;
+            updateStepDisplay();
+            if (evenBridge) sendToGlasses();
+        }
+        
+        // Previous step
+        function previousStep() {
+            if (!currentScript || currentStepIndex <= 0) return;
+            currentStepIndex--;
+            updateStepDisplay();
+            if (evenBridge) sendToGlasses();
+        }
+        
+        // Send to G2 glasses
+        function sendToGlasses() {
+            if (!evenBridge || !currentScript) return;
+            
+            const step = currentScript.steps[currentStepIndex];
+            
+            evenBridge.displayText({
+                title: currentScript.title,
+                text: step,
+                step: currentStepIndex + 1,
+                total: currentScript.steps.length
+            });
+            
+            console.log('Sent to G2:', step);
+        }
+        
+        // Handle G2 input
+        function handleG2Input(msg) {
+            console.log('G2 Input:', msg);
+            
+            if (!currentScript) return;
+            
+            if (msg.type === 'BUTTON_SINGLE' || msg.type === 'SWIPE_UP') {
+                nextStep();
+            } else if (msg.type === 'BUTTON_DOUBLE' || msg.type === 'SWIPE_DOWN') {
+                previousStep();
+            }
+        }
+        
+        // Start
+        init();
+    </script>
+</body>
+</html>
