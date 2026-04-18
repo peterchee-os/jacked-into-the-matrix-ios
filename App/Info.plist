@@ -50,5 +50,9 @@
     <string>Jacked Into The Matrix uses Bluetooth to connect to your Even G2 glasses for displaying step-by-step instructions.</string>
     <key>NSBluetoothPeripheralUsageDescription</key>
     <string>Jacked Into The Matrix needs to connect to Even G2 glasses to send display data.</string>
+    <key>LSApplicationQueriesSchemes</key>
+    <array>
+        <string>evenhub</string>
+    </array>
 </dict>
 </plist>

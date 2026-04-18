@@ -342,8 +342,8 @@ struct PlaybackConfirmationSheet: View {
         // Start playback on phone
         appEnvironment.playbackEngine.start(script: script, mode: .stepByStep)
 
-        // TODO: Send to Even G2 glasses via EvenSessionManager
-        // appEnvironment.evenSessionManager.send(payload: ...)
+        // Launch Even Hub with the script
+        EvenHubLauncher.launchWithScript(script)
 
         dismiss()
 

@@ -25,6 +25,7 @@
 		726EABCE8AA857CA79233148 /* AnalyticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F68DA2EF271D2CC4AA78DB /* AnalyticsService.swift */; };
 		77E65C696F057EE9846836A6 /* GlassesStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53669582BF63F7F788622ED8 /* GlassesStatusView.swift */; };
 		79B59ECF776BA05A3493EC98 /* wire_three_way_light_switch.json in Resources */ = {isa = PBXBuildFile; fileRef = 4CEFE18A4291EBC72EB94113 /* wire_three_way_light_switch.json */; };
+		887625187F7CA80F6E6A1262 /* EvenHubLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = C816D7599AF559CC3410FDFE /* EvenHubLauncher.swift */; };
 		91FEACC317897F63898A3113 /* SeedScriptLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3624E7823A729289EA365BA3 /* SeedScriptLoader.swift */; };
 		9748B4D36D9BFB540795014A /* SourceReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85697D6DDD25F673802EF9A /* SourceReference.swift */; };
 		A2BECF7659AD11536687FAB9 /* EvenSessionManaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC73F3DFE7CDCBC4AB2815B /* EvenSessionManaging.swift */; };
@@ -54,7 +55,7 @@
 		065CF97B6C122E4ABCE8E229 /* ModelRouting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelRouting.swift; sourceTree = "<group>"; };
 		133107E493F2483D293BE50B /* ModelGenerationTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelGenerationTypes.swift; sourceTree = "<group>"; };
 		13EEC83686A58CB6F69E00F9 /* MockModelRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockModelRouter.swift; sourceTree = "<group>"; };
-		142A1589E80296764CBFD82C /* JackedIntoTheMatrix.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JackedIntoTheMatrix.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		142A1589E80296764CBFD82C /* JackedIntoTheMatrix.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = JackedIntoTheMatrix.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		19EBBBC7584EF08D72D3AD08 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		1A09E6BC69E5FFF14C2E89ED /* pass_lead_belay_gym_test.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = pass_lead_belay_gym_test.json; sourceTree = "<group>"; };
 		1E6359AC763686AACCDF0117 /* MockEvenSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockEvenSessionManager.swift; sourceTree = "<group>"; };
@@ -80,6 +81,7 @@
 		B85697D6DDD25F673802EF9A /* SourceReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceReference.swift; sourceTree = "<group>"; };
 		BCED0C63B1FBB16478CDE1F3 /* G2PayloadFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = G2PayloadFormatter.swift; sourceTree = "<group>"; };
 		C0A13BD5F65517706424D78D /* SwiftDataScriptRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftDataScriptRepository.swift; sourceTree = "<group>"; };
+		C816D7599AF559CC3410FDFE /* EvenHubLauncher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvenHubLauncher.swift; sourceTree = "<group>"; };
 		CDC73F3DFE7CDCBC4AB2815B /* EvenSessionManaging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvenSessionManaging.swift; sourceTree = "<group>"; };
 		CE4F04B2356F6E884C4310A9 /* CategoriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesView.swift; sourceTree = "<group>"; };
 		CE5F3EB91EA4958141294FEA /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
@@ -301,6 +303,7 @@
 			children = (
 				53B130F9581634CA08482DA4 /* EvenG2Configuration.swift */,
 				E448277AC55C3A5250EEE674 /* EvenG2SessionManager.swift */,
+				C816D7599AF559CC3410FDFE /* EvenHubLauncher.swift */,
 				CDC73F3DFE7CDCBC4AB2815B /* EvenSessionManaging.swift */,
 				EFC8BC2A341CCC228D9FD418 /* EvenWebViewManager.swift */,
 				BCED0C63B1FBB16478CDE1F3 /* G2PayloadFormatter.swift */,
@@ -368,6 +371,12 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					1B93E100CFF452A5FE19D66D = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Automatic;
+					};
+				};
 			};
 			buildConfigurationList = 84C9805EAC88461E68E6557B /* Build configuration list for PBXProject "JackedIntoTheMatrix" */;
 			developmentRegion = en;
@@ -440,6 +449,7 @@
 				BCA48FBC7353F9BD42A0D725 /* Enums.swift in Sources */,
 				0B63FEAE8B7EBA7B502FABCA /* EvenG2Configuration.swift in Sources */,
 				36CAD2DB91FF62805FB8C9FE /* EvenG2SessionManager.swift in Sources */,
+				887625187F7CA80F6E6A1262 /* EvenHubLauncher.swift in Sources */,
 				A2BECF7659AD11536687FAB9 /* EvenSessionManaging.swift in Sources */,
 				48A355B0D5852CC548375852 /* EvenWebViewManager.swift in Sources */,
 				DBFD50E9DD4E0BD6272ECBF0 /* FavoritesView.swift in Sources */,
@@ -476,7 +486,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = 6GBLG995MK;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = App/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -557,7 +568,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = 6GBLG995MK;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = App/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
