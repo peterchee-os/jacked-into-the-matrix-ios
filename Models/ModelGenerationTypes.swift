@@ -15,7 +15,7 @@ struct StepGenerationConstraints: Codable, Hashable {
     var requireVerbFirst: Bool
 }
 
-struct StepGenerationResult: Codable, Hashable {
+struct StepGenerationResult {
     var modelID: String
     var fallbackUsed: Bool
     var confidence: Double?

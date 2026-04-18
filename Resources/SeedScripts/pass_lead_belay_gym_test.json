@@ -1,15 +1,34 @@
 {
   "title": "Pass the Lead Belay Gym Test",
   "category": "climbingOutdoor",
-  "summary": "Wearable rehearsal sequence for common lead belay checks.",
+  "summary": "Wearable rehearsal sequence for lead belay certification. Life-critical safety checks.",
   "riskLevel": "high",
+  "toolsNeeded": ["Harness", "Belay device", "Locking carabiner", "Dynamic rope"],
+  "prerequisites": ["Top-rope belay certified", "Lead climbing experience"],
+  "warnings": [
+    {
+      "title": "Life Safety Critical",
+      "message": "Improper belay technique can result in serious injury or death. This is rehearsal only.",
+      "severity": "danger"
+    },
+    {
+      "title": "Hands-On Training Required",
+      "message": "Use this for memorization only. Get certified instruction before lead belaying.",
+      "severity": "danger"
+    }
+  ],
   "steps": [
-    "Check harness is doubled back.",
-    "Check knot is dressed and finished.",
-    "Check belay device is threaded correctly.",
-    "Keep brake hand on rope.",
-    "Use standard climbing commands.",
-    "Manage slack without short-roping.",
-    "Lower with control."
+    "Check climber's harness is doubled back at waist and legs.",
+    "Verify climber's tie-in knot is dressed and has backup.",
+    "Confirm belay device is compatible with rope diameter.",
+    "Thread rope through belay device correctly (follow diagram).",
+    "Lock carabiner through device and harness belay loop.",
+    "Perform partner check: harness, knot, device, carabiner locked.",
+    "Establish communication with standard commands.",
+    "Keep brake hand on rope at all times.",
+    "Give slack smoothly as climber clips.",
+    "Take in slack promptly after clips.",
+    "Never short-rope the climber.",
+    "Prepare to catch a fall with brake hand locked down."
   ]
 }

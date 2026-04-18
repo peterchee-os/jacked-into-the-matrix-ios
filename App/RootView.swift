@@ -2,6 +2,8 @@ import SwiftUI
 
 struct RootView: View {
     @EnvironmentObject private var router: AppRouter
+    @EnvironmentObject private var appEnvironment: AppEnvironment
+    @State private var isSeeded = false
 
     var body: some View {
         TabView(selection: $router.selectedTab) {
@@ -28,6 +30,15 @@ struct RootView: View {
             SettingsView()
                 .tabItem { Label("Settings", systemImage: "gearshape") }
                 .tag(AppRouter.Tab.settings)
+        }
+        .task {
+            guard !isSeeded else { return }
+            do {
+                try await appEnvironment.scriptRepository.seedIfNeeded()
+                isSeeded = true
+            } catch {
+                print("Failed to seed scripts: \(error)")
+            }
         }
     }
 }

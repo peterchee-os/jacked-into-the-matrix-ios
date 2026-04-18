@@ -1,15 +1,20 @@
 {
   "title": "Garden Fresh Pesto Pasta",
   "category": "cooking",
-  "summary": "Simple cooking sequence for pesto pasta.",
+  "summary": "Simple weeknight pesto pasta with fresh basil from the garden.",
   "riskLevel": "low",
+  "toolsNeeded": ["Large pot", "Colander", "Food processor or mortar", "Tongs"],
+  "materialsNeeded": ["Pasta (linguine or fusili)", "Fresh basil (2 cups)", "Garlic (2 cloves)", "Pine nuts or walnuts", "Parmesan cheese", "Olive oil", "Salt"],
   "steps": [
-    "Boil salted water.",
-    "Cook pasta until al dente.",
-    "Blend basil, garlic, nuts, parmesan, and oil.",
-    "Reserve a little pasta water.",
-    "Toss pasta with pesto.",
-    "Loosen sauce with pasta water.",
-    "Serve and top with parmesan."
+    "Bring large pot of salted water to boil.",
+    "Add pasta and cook until al dente (check package time).",
+    "While pasta cooks, blend basil, garlic, nuts, and parmesan.",
+    "Slowly drizzle in olive oil while blending to emulsify.",
+    "Taste pesto and season with salt if needed.",
+    "Before draining, reserve 1 cup of pasta water.",
+    "Drain pasta, saving some cooking water.",
+    "Toss hot pasta with pesto in the pot.",
+    "Add pasta water a splash at a time to loosen sauce.",
+    "Serve immediately with extra parmesan on top."
   ]
 }

@@ -1,16 +1,35 @@
 {
   "title": "Wire a Three-Way Light Switch",
   "category": "homeDIY",
-  "summary": "Hands-free overview for wiring a three-way switch.",
+  "summary": "Hands-free guidance for wiring a three-way switch circuit. Turn one light on/off from two locations.",
   "riskLevel": "high",
+  "toolsNeeded": ["Voltage tester", "Wire stripper", "Screwdriver", "Wire nuts"],
+  "materialsNeeded": ["Three-way switches (2)", "14/3 wire", "Wire nuts"],
+  "prerequisites": ["Locate breaker panel", "Identify circuit breaker"],
+  "warnings": [
+    {
+      "title": "Electrical Shock Hazard",
+      "message": "Always turn off power at the breaker and verify with a tester before touching wires.",
+      "severity": "danger"
+    },
+    {
+      "title": "Qualified Electrician",
+      "message": "If unsure about any step, consult a licensed electrician.",
+      "severity": "caution"
+    }
+  ],
   "steps": [
-    "Turn off the breaker.",
-    "Confirm power is off with a tester.",
-    "Identify the common wire.",
-    "Identify the traveler wires.",
-    "Connect the common terminal.",
-    "Connect both traveler terminals.",
-    "Attach and secure ground wires.",
-    "Restore power and test both switches."
+    "Turn off the breaker controlling the circuit.",
+    "Verify power is off with a non-contact voltage tester.",
+    "Remove existing switch plates and switches.",
+    "Identify the common wire (usually black or marked).",
+    "Identify the two traveler wires (usually red and black).",
+    "Connect the common wire to the common terminal (dark screw).",
+    "Connect traveler wires to the brass traveler terminals.",
+    "Connect ground wire to green ground screw.",
+    "Secure wire nuts on all connections.",
+    "Carefully fold wires into box and mount switch.",
+    "Repeat at the second switch location.",
+    "Turn breaker on and test both switches."
   ]
 }

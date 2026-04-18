@@ -23,22 +23,17 @@ final class MockModelRouter: ModelRouting {
             }
 
         let script = Script(
-            id: UUID(),
             title: source.title,
             category: source.category,
             summary: "Mock-generated wearable steps.",
             riskLevel: source.riskLevel,
             sourceType: .aiGenerated,
-            sourceReferences: [],
             prerequisites: [],
             toolsNeeded: [],
             materialsNeeded: [],
             warnings: [],
             verificationChecklist: [],
-            steps: steps,
-            isFavorite: false,
-            createdAt: Date(),
-            updatedAt: Date()
+            steps: steps
         )
 
         return StepGenerationResult(

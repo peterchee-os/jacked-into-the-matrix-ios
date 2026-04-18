@@ -1,15 +1,25 @@
 {
   "title": "Update OpenClaw via CLI",
   "category": "softwareCLI",
-  "summary": "Compact CLI workflow for updating OpenClaw.",
+  "summary": "Step-by-step CLI workflow for safely updating OpenClaw gateway and agents.",
   "riskLevel": "medium",
+  "toolsNeeded": ["Terminal access", "Admin privileges"],
+  "prerequisites": ["Backup current config", "Check current version"],
+  "warnings": [
+    {
+      "title": "Service Interruption",
+      "message": "Update will restart the gateway. Active sessions will be interrupted.",
+      "severity": "warning"
+    }
+  ],
   "steps": [
-    "Check the current OpenClaw version.",
-    "Stop active services if required.",
-    "Pull the latest release or package.",
-    "Run the update command.",
-    "Restart the gateway or app.",
-    "Verify the new version.",
-    "Check logs for errors."
+    "Check current version: openclaw version",
+    "Review release notes for breaking changes.",
+    "Stop the gateway: openclaw gateway stop",
+    "Backup config: cp ~/.openclaw/config.json ~/.openclaw/config.json.bak",
+    "Run update: openclaw update",
+    "Start gateway: openclaw gateway start",
+    "Verify status: openclaw status",
+    "Check logs: openclaw logs --tail 50"
   ]
 }

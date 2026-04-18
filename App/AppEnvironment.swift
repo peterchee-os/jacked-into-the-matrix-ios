@@ -1,5 +1,7 @@
 import Foundation
+import SwiftData
 
+@MainActor
 final class AppEnvironment: ObservableObject {
     let scriptRepository: ScriptRepository
     let playbackEngine: PlaybackEngine
@@ -22,7 +24,14 @@ final class AppEnvironment: ObservableObject {
     }
 
     static func bootstrap() -> AppEnvironment {
-        let repository = InMemoryScriptRepository()
+        let repository: ScriptRepository
+        do {
+            repository = try SwiftDataScriptRepository()
+        } catch {
+            print("Failed to initialize SwiftData repository: \(error). Falling back to in-memory.")
+            repository = InMemoryScriptRepository()
+        }
+        
         let playbackEngine = PlaybackEngine()
         let evenManager = MockEvenSessionManager()
         let modelRouter = MockModelRouter()

@@ -1,4 +1,5 @@
 import SwiftUI
+import SwiftData
 
 @main
 struct JackedIntoTheMatrixApp: App {
@@ -11,5 +12,6 @@ struct JackedIntoTheMatrixApp: App {
                 .environmentObject(appRouter)
                 .environmentObject(appEnvironment)
         }
+        .modelContainer(for: Script.self)
     }
 }
