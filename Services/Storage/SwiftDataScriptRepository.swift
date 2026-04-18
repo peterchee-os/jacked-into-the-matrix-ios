@@ -7,6 +7,9 @@ final class SwiftDataScriptRepository: ScriptRepository {
     private let modelContext: ModelContext
     
     init() throws {
+        // Create Application Support directory if needed
+        Self.createAppSupportDirectoryIfNeeded()
+        
         let schema = Schema([Script.self])
         let configuration = ModelConfiguration(
             schema: schema,
@@ -15,6 +18,25 @@ final class SwiftDataScriptRepository: ScriptRepository {
         modelContainer = try ModelContainer(for: schema, configurations: [configuration])
         modelContext = ModelContext(modelContainer)
         modelContext.autosaveEnabled = true
+    }
+    
+    private static func createAppSupportDirectoryIfNeeded() {
+        let fileManager = FileManager.default
+        
+        if let appSupport = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask).first {
+            if !fileManager.fileExists(atPath: appSupport.path) {
+                do {
+                    try fileManager.createDirectory(
+                        at: appSupport,
+                        withIntermediateDirectories: true,
+                        attributes: nil
+                    )
+                    print("✅ Created Application Support directory")
+                } catch {
+                    print("❌ Failed to create Application Support directory:", error)
+                }
+            }
+        }
     }
     
     func fetchAllScripts() async throws -> [Script] {
